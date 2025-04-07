@@ -54,7 +54,6 @@ export async function signIn(params: SignInParams) {
 
     await setSessionCookie(idToken);
   } catch (error) {
-    console.log(error);
 
     return {
       succes: false,
@@ -88,23 +87,20 @@ export async function getCurrentUser(): Promise<User | null> {
 
 
   if (!sessionCookie){
-    console.log('session error')
+    ('session error')
     return null;
   } 
 
   try {
     const decodedClaims = await auth.verifySessionCookie(sessionCookie, true);
-    console.log("decoded claims" , decodedClaims.uid)
 
     const userRecord = await db
       .collection("users")
       .doc(decodedClaims.uid)
       .get();
 
-    console.log( "user " , userRecord)
 
     if (!(userRecord.exists)){
-        console.log("user error")
         return null;
     }
         
@@ -114,7 +110,7 @@ export async function getCurrentUser(): Promise<User | null> {
       id: userRecord.id,
     } as User;
   } catch (error) {
-    console.log(error);
+    (error);
     return null;
   }
 }
